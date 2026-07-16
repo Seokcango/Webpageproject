@@ -1,0 +1,2 @@
+- [2026-07-16] TECHSPEC.md 최초 작성 - PRD(Streamlit+Python+SQLite 전제)와 실제 스캐폴딩(React+TS+Vite+Zustand+Tailwind) 간 스택 불일치를 재해석, 미구현 기능(6.1~6.5)에 대한 SPA 기준 기술 설계 수립. 데이터 계층(브라우저 전용 IndexedDB vs 별도 백엔드 API)은 미확정 상태로 두 옵션을 병기하고 `DataRepository` 인터페이스로 추상화.
+- [2026-07-16] 데이터 계층을 Supabase(Postgres+Storage) 기반으로 확정 - 별도 백엔드 서버 없이 BaaS로 PRD의 서버 자동 처리 취지를 만족. 인증은 두지 않고 anon key+RLS만 적용하기로 결정(개인 단독 사용 전제, 보안 리스크로 문서에 기록), CSV 클렌징/집계는 클라이언트(브라우저)에서 처리 후 결과만 저장하는 방식으로 확정.
