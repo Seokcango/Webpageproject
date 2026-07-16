@@ -94,7 +94,7 @@ function DashboardMockup() {
 
   return (
     <div className="relative mt-16 lg:mt-20">
-      <div className="relative bg-[#111827] rounded-2xl border border-white/10 overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
+      <div className="relative bg-[#111827] rounded border border-white/10 overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.6)]">
         {/* Title bar */}
         <div className="flex items-center gap-2 px-5 py-3.5 border-b border-white/10 bg-white/5">
           <div className="w-3 h-3 rounded-full bg-[#FF5F57]" />
@@ -105,7 +105,7 @@ function DashboardMockup() {
           </span>
           <div className="ml-auto flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-green-400" style={{ animation: 'pulse-dot 2s ease-in-out infinite' }} />
-            <span className="text-[10px] text-white/30">실시간</span>
+            <span className="text-[10px] text-white/30">자동 갱신</span>
           </div>
         </div>
 
@@ -117,7 +117,7 @@ function DashboardMockup() {
               { label: '정상 데이터 비율', value: '94.2%', tag: '▲ 0.8%', tagColor: 'text-emerald-400' },
               { label: '오늘 처리 건수', value: '1,247', tag: '자동 처리', tagColor: 'text-[#0057D8]' },
             ].map((s) => (
-              <div key={s.label} className="bg-white/5 rounded-xl p-4">
+              <div key={s.label} className="bg-white/5 rounded p-4">
                 <div className="text-white/40 text-[11px] mb-1.5">{s.label}</div>
                 <div className="text-white text-xl font-bold">{s.value}</div>
                 <div className={`text-[11px] mt-1 font-medium ${s.tagColor}`}>{s.tag}</div>
@@ -126,14 +126,14 @@ function DashboardMockup() {
           </div>
 
           {/* Chart */}
-          <div className="bg-white/5 rounded-xl p-4">
+          <div className="bg-white/5 rounded p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-white/40 text-[11px]">최근 30일 데이터 추이</span>
               <div className="flex gap-3">
                 {['일별', '주별', '월별'].map((t, i) => (
                   <span
                     key={t}
-                    className={`text-[11px] px-2.5 py-0.5 rounded-full ${i === 0 ? 'bg-[#0057D8] text-white' : 'text-white/30'}`}
+                    className={`text-[11px] px-2.5 py-0.5 rounded ${i === 0 ? 'bg-[#0057D8] text-white' : 'text-white/30'}`}
                   >
                     {t}
                   </span>
@@ -157,7 +157,7 @@ function DashboardMockup() {
 
           {/* Bottom row */}
           <div className="grid grid-cols-2 gap-3 mt-3">
-            <div className="bg-white/5 rounded-xl p-4">
+            <div className="bg-white/5 rounded p-4">
               <div className="text-white/40 text-[11px] mb-2">데이터 상태 분포</div>
               <div className="space-y-2">
                 {[
@@ -167,15 +167,15 @@ function DashboardMockup() {
                 ].map((row) => (
                   <div key={row.label} className="flex items-center gap-2">
                     <span className="text-white/50 text-[11px] w-8">{row.label}</span>
-                    <div className="flex-1 bg-white/10 rounded-full h-1.5 overflow-hidden">
-                      <div className={`${row.color} h-full rounded-full`} style={{ width: `${row.pct}%` }} />
+                    <div className="flex-1 bg-white/10 rounded h-1.5 overflow-hidden">
+                      <div className={`${row.color} h-full rounded`} style={{ width: `${row.pct}%` }} />
                     </div>
                     <span className="text-white/40 text-[11px] w-8 text-right">{row.pct}%</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="bg-white/5 rounded-xl p-4">
+            <div className="bg-white/5 rounded p-4">
               <div className="text-white/40 text-[11px] mb-2">최근 업로드</div>
               <div className="space-y-2">
                 {[
@@ -222,7 +222,7 @@ function HeroSection() {
       <div className="relative max-w-[1200px] mx-auto px-6 py-24 w-full">
         <div className="max-w-[760px] animate-fade-in-up">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2.5 bg-white/8 border border-white/15 rounded-full px-4 py-1.5 mb-7">
+          <div className="inline-flex items-center gap-2.5 bg-white/8 border border-white/15 rounded px-4 py-1.5 mb-7">
             <span
               className="w-1.5 h-1.5 rounded-full bg-emerald-400"
               style={{ animation: 'pulse-dot 2s ease-in-out infinite' }}
@@ -249,14 +249,14 @@ function HeroSection() {
           <div className="flex flex-wrap gap-4">
             <a
               href="#features"
-              className="inline-flex items-center gap-2 bg-[#0057D8] hover:bg-[#003FAF] text-white font-semibold px-7 py-3.5 rounded-xl text-base transition-colors duration-200 shadow-[0_0_24px_rgba(0,87,216,0.4)]"
+              className="inline-flex items-center gap-2 bg-[#0057D8] hover:bg-[#003FAF] text-white font-semibold px-7 py-3.5 rounded text-base transition-colors duration-200 shadow-[0_0_24px_rgba(0,87,216,0.4)]"
             >
               시작하기
               <ArrowRight />
             </a>
             <a
               href="#how-it-works"
-              className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 hover:bg-white/5 text-white/75 hover:text-white font-medium px-7 py-3.5 rounded-xl text-base transition-all duration-200"
+              className="inline-flex items-center gap-2 border border-white/20 hover:border-white/40 hover:bg-white/5 text-white/75 hover:text-white font-medium px-7 py-3.5 rounded text-base transition-all duration-200"
             >
               기능 살펴보기
             </a>
@@ -325,10 +325,10 @@ function PainSection() {
           {PAIN_POINTS.map(({ icon, title, desc, stat }) => (
             <div
               key={title}
-              className="group relative bg-[#F8F8F8] hover:bg-white border border-[#E5E5E5] hover:border-[#0057D8]/30 rounded-2xl p-8 transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,87,216,0.08)] hover:-translate-y-1"
+              className="group relative bg-[#F8F8F8] hover:bg-white border border-[#E5E5E5] hover:border-[#0057D8]/30 rounded p-8 transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,87,216,0.08)] hover:-translate-y-1"
             >
               <div className="text-[#0057D8] mb-5">{icon}</div>
-              <div className="inline-block bg-[#0057D8]/10 text-[#0057D8] text-xs font-bold px-3 py-1 rounded-full mb-4">
+              <div className="inline-block bg-[#0057D8]/10 text-[#0057D8] text-xs font-bold px-3 py-1 rounded mb-4">
                 {stat}
               </div>
               <h3 className="text-xl font-bold text-[#1A1A1A] mb-3">{title}</h3>
@@ -346,9 +346,9 @@ function PainSection() {
 const FEATURES = [
   {
     icon: <UploadIcon />,
-    title: 'CSV 자동 업로드 & 검증',
-    desc: 'CSV 파일을 드래그앤드롭으로 업로드하면 필수 컬럼, 데이터 타입, 범위를 즉시 자동 검증합니다.',
-    highlights: ['CSV/XLSX 지원', '실시간 유효성 검사', '오류 행 명확한 표시'],
+    title: 'CSV 업로드 & 웹 폼 입력',
+    desc: 'CSV 파일 업로드 또는 웹 폼 직접 입력, 두 가지 방식으로 데이터를 등록할 수 있습니다. 필수 컬럼과 데이터 타입을 즉시 자동 검증합니다.',
+    highlights: ['CSV 지원 (XLSX 예정)', '웹 폼 수동 입력', '실시간 유효성 검사'],
   },
   {
     icon: <SparkIcon />,
@@ -402,9 +402,9 @@ function FeaturesSection() {
           {FEATURES.map(({ icon, title, desc, highlights }) => (
             <div
               key={title}
-              className="group bg-white border border-[#E5E5E5] rounded-2xl p-8 hover:border-[#0057D8]/40 hover:shadow-[0_12px_40px_rgba(0,87,216,0.08)] transition-all duration-300 hover:-translate-y-1"
+              className="group bg-white border border-[#E5E5E5] rounded p-8 hover:border-[#0057D8]/40 hover:shadow-[0_12px_40px_rgba(0,87,216,0.08)] transition-all duration-300 hover:-translate-y-1"
             >
-              <div className="w-12 h-12 bg-[#0057D8]/10 rounded-xl flex items-center justify-center text-[#0057D8] mb-6 group-hover:bg-[#0057D8] group-hover:text-white transition-colors duration-300">
+              <div className="w-12 h-12 bg-[#0057D8]/10 rounded flex items-center justify-center text-[#0057D8] mb-6 group-hover:bg-[#0057D8] group-hover:text-white transition-colors duration-300">
                 {icon}
               </div>
               <h3 className="text-xl font-bold text-[#1A1A1A] mb-3">{title}</h3>
@@ -412,7 +412,7 @@ function FeaturesSection() {
               <ul className="space-y-2">
                 {highlights.map((h) => (
                   <li key={h} className="flex items-center gap-2.5 text-sm text-[#333333]">
-                    <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                    <span className="w-5 h-5 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
                       <CheckIcon />
                     </span>
                     {h}
@@ -489,7 +489,7 @@ function HowItWorksSection() {
             {STEPS.map(({ num, title, desc, detail }, idx) => (
               <div key={num} className="relative flex flex-col items-center text-center md:items-start md:text-left">
                 {/* Number badge */}
-                <div className="relative z-10 w-16 h-16 rounded-2xl bg-[#0057D8] flex items-center justify-center mb-6 shadow-[0_0_24px_rgba(0,87,216,0.3)]">
+                <div className="relative z-10 w-16 h-16 rounded bg-[#0057D8] flex items-center justify-center mb-6 shadow-[0_0_24px_rgba(0,87,216,0.3)]">
                   <span className="text-white font-extrabold text-xl">{num}</span>
                   {idx < STEPS.length - 1 && (
                     <div className="md:hidden absolute -bottom-10 left-1/2 -translate-x-1/2 w-px h-10 bg-[#E5E5E5]" />
@@ -498,7 +498,7 @@ function HowItWorksSection() {
 
                 <h3 className="text-xl font-bold text-[#1A1A1A] mb-3">{title}</h3>
                 <p className="text-[#767676] text-sm leading-[1.7] mb-4">{desc}</p>
-                <div className="inline-flex items-center gap-1.5 text-[#0057D8] text-xs font-semibold bg-[#0057D8]/8 rounded-full px-3.5 py-1.5">
+                <div className="inline-flex items-center gap-1.5 text-[#0057D8] text-xs font-semibold bg-[#0057D8]/8 rounded px-3.5 py-1.5">
                   {detail}
                 </div>
               </div>
@@ -507,8 +507,8 @@ function HowItWorksSection() {
         </div>
 
         {/* User journey note */}
-        <div className="mt-16 bg-[#F8F8F8] border border-[#E5E5E5] rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
-          <div className="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center shrink-0 text-amber-600">
+        <div className="mt-16 bg-[#F8F8F8] border border-[#E5E5E5] rounded p-6 flex flex-col md:flex-row items-start md:items-center gap-4">
+          <div className="w-10 h-10 bg-amber-100 rounded flex items-center justify-center shrink-0 text-amber-600">
             <AlertIcon />
           </div>
           <div>
@@ -567,7 +567,7 @@ function StatsSection() {
           {STATS.map(({ value, label, sub }) => (
             <div
               key={label}
-              className="group text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#0057D8]/50 rounded-2xl p-8 transition-all duration-300"
+              className="group text-center bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#0057D8]/50 rounded p-8 transition-all duration-300"
             >
               <div className="text-[42px] md:text-[52px] font-extrabold text-white mb-2 leading-none group-hover:text-[#0057D8] transition-colors duration-300">
                 {value}
@@ -606,7 +606,7 @@ function CtaSection() {
   return (
     <section id="cta" ref={ref} className="bg-white py-24 md:py-32 section-fade">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="relative bg-[#0057D8] rounded-3xl overflow-hidden px-8 py-16 md:py-20 text-center">
+        <div className="relative bg-[#0057D8] rounded overflow-hidden px-8 py-16 md:py-20 text-center">
           {/* Background pattern */}
           <div
             className="absolute inset-0 opacity-20"
@@ -632,14 +632,14 @@ function CtaSection() {
             <div className="flex flex-wrap gap-4 justify-center">
               <a
                 href="#"
-                className="inline-flex items-center gap-2 bg-white text-[#0057D8] font-bold px-8 py-4 rounded-xl text-base hover:bg-white/90 transition-colors duration-200 shadow-lg"
+                className="inline-flex items-center gap-2 bg-white text-[#0057D8] font-bold px-8 py-4 rounded text-base hover:bg-white/90 transition-colors duration-200 shadow-lg"
               >
                 대시보드 열기
                 <ArrowRight />
               </a>
               <a
                 href="#how-it-works"
-                className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-xl text-base transition-colors duration-200"
+                className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded text-base transition-colors duration-200"
               >
                 사용 방법 보기
               </a>

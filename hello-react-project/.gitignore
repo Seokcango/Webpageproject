@@ -12,15 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Env files (never commit secrets)
-.env
-.env.*
-!.env.example
-
-# Claude Code tooling (not project source)
-.agents/
-skills-lock.json
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

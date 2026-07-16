@@ -16,7 +16,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-start gap-8">
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 bg-[#0057D8] rounded-md flex items-center justify-center">
+              <div className="w-7 h-7 bg-[#0057D8] rounded flex items-center justify-center">
                 <LogoIcon />
               </div>
               <span className="font-bold text-white text-base">DataAuto</span>

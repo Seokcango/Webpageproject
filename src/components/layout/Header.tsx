@@ -64,7 +64,7 @@ export function Header() {
     >
       <div className="max-w-[1200px] mx-auto px-6 h-16 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2.5 shrink-0">
-          <div className="w-8 h-8 bg-[#0057D8] rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-[#0057D8] rounded flex items-center justify-center">
             <LogoIcon />
           </div>
           <span
@@ -90,7 +90,7 @@ export function Header() {
 
         <a
           href="#cta"
-          className="hidden md:inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors duration-200"
+          className="hidden md:inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors duration-200"
         >
           대시보드 열기
           <ArrowRight />
@@ -120,7 +120,7 @@ export function Header() {
           ))}
           <a
             href="#cta"
-            className="inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors mt-2"
+            className="inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors mt-2"
             onClick={() => setMobileOpen(false)}
           >
             대시보드 열기
