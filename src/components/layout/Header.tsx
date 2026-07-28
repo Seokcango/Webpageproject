@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import { LogoutButton } from '@/components/auth/LogoutButton';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const NAV_LINKS = [
   { label: '기능', href: '#features' },
@@ -44,6 +48,10 @@ function CloseIcon() {
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const status = useAuthStore((state) => state.status);
+  const userEmail = useAuthStore((state) => state.user?.email);
+  const isLoading = status === 'loading';
+  const isAuthenticated = status === 'authenticated';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -88,13 +96,35 @@ export function Header() {
           ))}
         </nav>
 
-        <a
-          href="#cta"
-          className="hidden md:inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors duration-200"
-        >
-          대시보드 열기
-          <ArrowRight />
-        </a>
+        <div className={`hidden md:flex items-center gap-4 ${isLoading ? 'invisible' : ''}`}>
+          {isAuthenticated ? (
+            <>
+              <span
+                title={userEmail}
+                className={`text-sm font-medium max-w-[180px] truncate transition-colors duration-150 ${textColor}`}
+              >
+                {userEmail}
+              </span>
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className={`text-sm font-medium transition-colors duration-150 ${textColor} ${hoverColor}`}
+              >
+                로그인
+              </Link>
+              <Link
+                to="/signup"
+                className="inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors duration-200"
+              >
+                회원가입
+                <ArrowRight />
+              </Link>
+            </>
+          )}
+        </div>
 
         <button
           type="button"
@@ -118,14 +148,32 @@ export function Header() {
               {label}
             </a>
           ))}
-          <a
-            href="#cta"
-            className="inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors mt-2"
-            onClick={() => setMobileOpen(false)}
-          >
-            대시보드 열기
-            <ArrowRight />
-          </a>
+          {isLoading ? null : isAuthenticated ? (
+            <>
+              <span title={userEmail} className="block text-sm font-medium text-[#333333] truncate">
+                {userEmail}
+              </span>
+              <LogoutButton />
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="block text-sm font-medium text-[#333333] hover:text-[#0057D8] transition-colors py-1"
+                onClick={() => setMobileOpen(false)}
+              >
+                로그인
+              </Link>
+              <Link
+                to="/signup"
+                className="inline-flex items-center gap-1.5 bg-[#0057D8] hover:bg-[#003FAF] text-white text-sm font-semibold px-5 py-2.5 rounded transition-colors mt-2"
+                onClick={() => setMobileOpen(false)}
+              >
+                회원가입
+                <ArrowRight />
+              </Link>
+            </>
+          )}
         </div>
       )}
     </header>
