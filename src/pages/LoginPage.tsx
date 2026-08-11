@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+import { fetchProfile } from '@/api/profiles';
 import { supabase } from '@/api/supabase';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -20,16 +21,21 @@ export function LoginPage() {
     setError(null);
     setIsLoading(true);
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-
-    setIsLoading(false);
+    const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
 
     if (signInError) {
+      setIsLoading(false);
       setError(signInError.message);
       return;
     }
 
-    navigate('/');
+    try {
+      const profile = await fetchProfile(data.user.id);
+      navigate(profile.onboarding_completed ? '/dashboard' : '/onboarding');
+    } catch {
+      setIsLoading(false);
+      setError('프로필 정보를 불러오지 못했습니다. 다시 시도해주세요.');
+    }
   }
 
   return (

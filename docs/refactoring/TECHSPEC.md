@@ -9,15 +9,19 @@ PRD는 Streamlit + Python + SQLite 기반의 로컬 실행형 앱을 전제로 �
 ### 구현 완료 (범위 제외)
 
 - 랜딩 페이지 (`src/pages/HomePage.tsx`, `src/components/layout/Header.tsx`, `src/components/layout/Footer.tsx`): Hero, Pain Point, Features, How It Works, Stats, CTA 섹션. 전부 하드코딩된 소개용 정적 콘텐츠이며 실데이터와 연결되어 있지 않다.
-- 프로젝트 스캐폴드: Vite + React + TS 빌드 파이프라인, Tailwind 설정, `@/*` alias, ESLint/Prettier/Vitest 구성.
+- 프로젝트 스캐폴드: Vite + React + TS 빌드 파이프라인, Tailwind 설정, `@/*` alias, ESLint/Prettier/Vitest 구성. 라우팅은 `react-router-dom`(`BrowserRouter`)으로 구성되어 있다.
+- 인증 (`src/pages/LoginPage.tsx`, `SignupPage.tsx`, `src/components/auth/LogoutButton.tsx`, `src/store/useAuthStore.ts`, `src/api/supabase.ts`): 이메일/비밀번호 기반 Supabase Auth 회원가입·로그인·로그아웃. `useAuthStore`가 `supabase.auth.onAuthStateChange`를 구독해 세션 상태(`session`/`user`/`status`)를 전역으로 노출한다.
+- 사용자 프로필 스키마 (`supabase/migrations/20260808000000_create_profiles.sql`): `profiles` 테이블(`id`/`email`/`onboarding_completed`/`purpose`/`main_problem`/`cleanup_frequency`/`outlier_handling`), RLS(select/insert/update 모두 `auth.uid() = id`만 허용), 가입 시 `(id, email)` 행을 자동 생성하는 `on_auth_user_created` 트리거까지 적용 완료. 온보딩 답변 컬럼은 가입 직후 전부 `NULL`이며 이를 채우는 화면은 미구현 — 3.0절에서 다룬다.
+- 공용 UI 컴포넌트 (`src/components/ui/Button.tsx`, `Card.tsx`, `Input.tsx`): `irep-design-system.md` 기준 색상·라운드·타이포 토큰을 Tailwind 임의값(`bg-[#0057D8]`, `border-[#E5E5E5]` 등)으로 반영한 기본 컴포넌트. 로그인/회원가입 폼에서 이미 사용 중이며, 신규 화면도 이 컴포넌트를 재사용한다.
 - `src/store/useCounterStore.ts`: Zustand 사용법을 보여주는 예시 코드로, 실제 기능이 아니므로 실제 기능 스토어 추가 시 삭제 대상.
 
 ### 미구현 (이 문서의 설계 대상)
 
-PRD 6장 기준 다음 5개 영역이 전부 미구현 상태이며, 이 문서에서 기술 설계를 다룬다.
+PRD 6장 기준 다음 5개 영역이 전부 미구현 상태이며, 이 문서에서 기술 설계를 다룬다. 이 외에 PRD에는 없으나 별도로 확정된 온보딩 기능(3.0절)도 설계 대상에 포함한다.
 
-| PRD 절 | 기능 영역 | 현재 상태 |
+| 절 | 기능 영역 | 현재 상태 |
 |---|---|---|
+| 3.0 | 인증 이후 온보딩 (질문 4개, 답변 저장, 라우팅 가드, 대시보드 개인화) | 미구현 — PRD 범위 외 추가 기능, `온보딩_질문_후보.md`로 확정됨 |
 | 6.1 | 데이터 입력 (CSV 업로드, 웹 폼, 컬럼 매핑) | 미구현 |
 | 6.2 | 데이터 클렌징 (중복 제거, 날짜 통일, 이상치 처리) | 미구현 |
 | 6.3 | 데이터 집계 (일/주/월별) | 미구현 |
@@ -34,16 +38,18 @@ PRD 6장 기준 다음 5개 영역이 전부 미구현 상태이며, 이 문서�
 
 | 요구사항 | Supabase 구성 |
 |---|---|
-| 데이터 저장 | Supabase Postgres (`raw_records`, `daily_aggregates`, `weekly_aggregates`, `monthly_aggregates`, `app_settings`, `upload_history` 테이블) |
+| 데이터 저장 | Supabase Postgres (`profiles` 테이블 구현 완료, `raw_records`, `daily_aggregates`, `weekly_aggregates`, `monthly_aggregates`, `app_settings`, `upload_history` 테이블은 설계만 완료) |
 | 원본 파일 보존 | Supabase Storage 버킷 `raw-uploads` (PRD의 "원본 CSV 별도 저장" 요구사항 충족) |
-| 클라이언트 접근 | `@supabase/supabase-js` (신규 의존성) |
-| 인증 | **사용하지 않음** — 개인 단독 사용 전제. `anon` key + 고정 `owner_id` 기준 RLS(Row Level Security) 정책만 적용 |
+| 클라이언트 접근 | `@supabase/supabase-js` (도입 완료, `src/api/supabase.ts`) |
+| 인증 | Supabase Auth(이메일/비밀번호) 적용 완료. `profiles` RLS가 `auth.uid() = id` 기준으로 행 단위 접근을 제한한다 |
 | 클렌징/집계 처리 위치 | **클라이언트(브라우저)** — CSV 파싱·클렌징·집계를 브라우저에서 계산한 뒤, 결과만 Supabase 테이블에 저장 (Edge Function 미사용) |
 | 백업 | Supabase 프로젝트 자체 백업(플랜에 따름) 또는 수동 `pg_dump`. PRD의 "일일 자동 백업(7일 보관)"은 무료 플랜 기준 지원되지 않으므로 Out of Scope로 유지 |
 
-### 보안 관련 주의 사항 (승인된 리스크)
+### 인증 및 접근 제어
 
-`anon` key는 클라이언트 번들에 그대로 노출되는 공개 키이며, 인증을 두지 않으므로 RLS의 `owner_id` 조건은 실질적인 접근 통제가 되지 못한다 — anon key를 아는 사람은 누구나 동일한 `owner_id`로 데이터를 읽고 쓸 수 있다. PRD 7장이 "개인 재정 정보 보호"를 비기능 요구사항으로 명시하고 있으므로, 이 구조는 **민감한 재정 데이터를 다루기 전에는 반드시 Supabase Auth 도입을 재검토**해야 한다. 현재는 개인 단독 사용·MVP 단계라는 전제 하에 승인된 리스크로 기록한다.
+`profiles` 테이블은 Supabase Auth 세션을 전제로 RLS가 `auth.uid() = id`를 검사하므로, 로그인하지 않은 사용자는 어떤 행도 읽거나 쓸 수 없다. 회원가입 시 `on_auth_user_created` 트리거가 `auth.users`와 1:1로 `profiles` 행을 자동 생성한다(`supabase/migrations/20260808000000_create_profiles.sql`).
+
+PRD 6.1~6.5의 데이터 테이블(`raw_records`, `*_aggregates`, `app_settings`, `upload_history`)은 아직 구현 전이다. 인증 체계가 이미 도입되어 있으므로, 이 테이블들도 별도의 고정 `owner_id` 대신 `auth.uid()`를 그대로 소유자 식별자로 사용하도록 설계를 갱신한다 — 각 테이블에 `owner_id uuid references auth.users(id)` 컬럼을 두고 RLS를 `auth.uid() = owner_id`로 건다. 개인 단독 사용이라는 전제는 유지하되, 이미 존재하는 인증 체계를 재사용해 추가 비용 없이 실질적인 접근 통제를 확보한다.
 
 ### 설계 원칙: 데이터 계층 추상화
 
